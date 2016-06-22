@@ -1,0 +1,94 @@
+/* welcome view */
+
+
+/*h1 {
+  color: #fff;
+  text-shadow: 0 1px 0px #000;
+  font-size: 42px;
+  text-align: center;
+}*/
+
+.welcome-view {
+  background-color: #666666;
+}
+.welcome-view .top-content {
+  height: 66%;
+}
+.welcome-view .top-content .app-copy {
+  text-align: center;
+  padding-top: 13vh;
+}
+.welcome-view .top-content .app-logo {
+  font-size: 60px;
+  font-family: sans-serif;
+  font-weight: 600;
+  color: #FFFFFF;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+.welcome-view .top-content .app-tagline {
+  font-size: 16px;
+  margin-top: 0px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+}
+.welcome-view .bottom-content {
+  height: 34%;
+}
+.welcome-view .bottom-content .facebook-sign-in {
+  border-radius: 6px;
+  font-weight: 500;
+  color: #FFF;
+  background-color: #3B5998;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+.welcome-view .bottom-content .note {
+  font-size: 12px;
+  margin-top: 0px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* icon tabs */
+
+.tabs .tab-item .icon.worldwide {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 70%;
+  background-image: url('../img/icons/worldwide.png');
+  background-size: contain;
+}
+.tabs .tab-item .icon.map-location {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 70%;
+  background-image: url('../img/icons/map-location.png');
+  background-size: contain;
+}
+.tabs .tab-item .icon.placeholder {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 70%;
+  background-image: url('../img/icons/placeholder.png');
+  background-size: contain;
+}
+.tabs .tab-item .icon.augmented-reality {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 70%;
+  background-image: url('../img/icons/augmented-reality.png');
+  background-size: contain;
+}
+.tabs .tab-item .icon.user {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 70%;
+  background-image: url('../img/icons/user.png');
+  background-size: contain;
+}
+
+/* map */
+.map-wrap {
+    height: 100%;
+    width: 100%;
+}
