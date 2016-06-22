@@ -3,9 +3,6 @@
   'use strict';
 
   function LoginController($scope, $state, $q, UserFactory, $ionicLoading, UtilsFactory) {
-
-    console.log('en login');
-
     var fbLoginSuccess = function(response) {
       if (!response.authResponse) {
         fbLoginError("Cannot find the authResponse");

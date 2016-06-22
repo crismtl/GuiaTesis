@@ -54,35 +54,35 @@
 .tabs .tab-item .icon.worldwide {
   background-repeat: no-repeat;
   background-position: 50%;
-  height: 70%;
+  height: 80%;
   background-image: url('../img/icons/worldwide.png');
   background-size: contain;
 }
 .tabs .tab-item .icon.map-location {
   background-repeat: no-repeat;
   background-position: 50%;
-  height: 70%;
+  height: 80%;
   background-image: url('../img/icons/map-location.png');
   background-size: contain;
 }
 .tabs .tab-item .icon.placeholder {
   background-repeat: no-repeat;
   background-position: 50%;
-  height: 70%;
+  height: 80%;
   background-image: url('../img/icons/placeholder.png');
   background-size: contain;
 }
 .tabs .tab-item .icon.augmented-reality {
   background-repeat: no-repeat;
   background-position: 50%;
-  height: 70%;
+  height: 80%;
   background-image: url('../img/icons/augmented-reality.png');
   background-size: contain;
 }
 .tabs .tab-item .icon.user {
   background-repeat: no-repeat;
   background-position: 50%;
-  height: 70%;
+  height: 80%;
   background-image: url('../img/icons/user.png');
   background-size: contain;
 }

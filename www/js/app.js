@@ -43,20 +43,6 @@
       // controller: 'AccountController'
     })
 
-    // Each tab has its own nav history stack:
-    // .state('tab.login', {
-    //   url: '/login',
-    //   views: {
-    //     'tab-login': {
-    //       templateUrl: 'templates/tab-login.html',
-    //       controller: 'LoginController',
-    //       data: {
-    //         loginRequired: false
-    //       }
-    //     }
-    //   }
-    // })
-
     .state('login', {
       url: '/login',
       data: {
@@ -66,6 +52,7 @@
       controller: 'LoginController'
     })
 
+    // Each tab has its own nav history stack:
     .state('tab.category', {
       url: '/category',
       data: {
@@ -74,7 +61,7 @@
       views: {
         'tab-category': {
           templateUrl: 'templates/tab-category-map.html',
-          // controller: 'AccountCtrl',
+          controller: 'CategoryController'
         }
       }
     })
@@ -124,7 +111,7 @@
   })
 
 
-  .run(function($ionicPlatform, $state, $rootScope, UserFactory) {
+  .run(function($ionicPlatform, $state, $rootScope, UserFactory, $cordovaToast) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -139,17 +126,20 @@
 
       $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
         var loginRequired = toState.data.loginRequired;
-        console.log('loginRequired', loginRequired);
-
         if (loginRequired) {
           if (UserFactory.getUser().userId) {
-            // toastr.success('Felicidades se encuentra logueado', 'Éxito');
-            console.log('esta logueado');
+            $cordovaToast.showLongBottom('Bienvenido').then(function(success) {
+              // success
+            }, function(error) {
+              // error
+            });
           } else {
-            // toastr.info('Necesita estar logueado para poder acceder a esta vista', 'Información');
-            console.log('vamo a loguearno');
-            event.preventDefault();
-            return $state.go('login')
+            $cordovaToast.showLongBottom('Se debe iniciar sesión para acceder a esta pestaña').then(function(success) {
+              event.preventDefault();
+              return $state.go('login')
+            }, function(error) {
+              // error
+            });
           }
         }
       });
