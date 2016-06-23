@@ -5,7 +5,7 @@
   "proxies": [
     {
       "path": "/ApiUrl",
-      "proxyUrl": "https://rest-guiaquito.rhcloud.com/guiaquito/api"
+      "proxyUrl": "https://rs-guiaquito.rhcloud.com/guiaquito/api"
     }
   ]
 }

@@ -2,18 +2,25 @@
   <ion-nav-buttons side="right">
     <button ng-click="centerOnCurrentPosition()" class="button button-icon icon ion-pinpoint"></button>
   </ion-nav-buttons>
+
   <ion-content scroll="false">
     <label class="item item-input item-select">
       <div class="input-label">
         Interés:
       </div>
-      <select name="type" multiple ng-model="interest" ng-options="interest.nameEs for interest in interests" ng-change="findPois(interest)">
+      <select name="type" multiple ng-model="interest" ng-options="interest.nameEs for interest in interests"
+              ng-change="findPois(interest)">
         <option style="display:none" value="">Seleccione...</option>
       </select>
     </label>
-    <div class="map-wrap" data-tap-disabled="true" map-lazy-load="https://maps.google.com/maps/api/js">
-      <ng-map style="height: 100%" default-style="false">
-        <custom-marker id="user" position="{{currentPos.lat()}}, {{currentPos.lng()}}">
+    <div class="map-wrap" data-tap-disabled="true" map-lazy-load="https://maps.google.com/maps/api/js"
+         map-lazy-load-params="{{mapsKey}}">
+      <ng-map center="[{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}]"
+              style="height: 100%" default-style="false"
+              map-type-control="false"
+              street-view-control="false"
+              zoom="16">
+        <custom-marker id="user" position="{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}">
           <img ng-src="{{currentPos.marker}}">
         </custom-marker>
         <custom-marker ng-repeat="m in markers" position="{{m.latitude}}, {{m.longitude}}">
@@ -22,7 +29,6 @@
         </custom-marker>
       </ng-map>
     </div>
-    <!--<a ng-click="openModal()" class="button button-block button-positive">Modal Intereses</a>-->
   </ion-content>
 
 </ion-view>
