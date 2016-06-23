@@ -4,7 +4,7 @@
     MODULE: 'guide.controllers',
     dependencies: [
       // 'ngCordova'
-      'ngMap'
+      // 'ngMap'
       //'guide.services',
       //'guide.factories'
     ]

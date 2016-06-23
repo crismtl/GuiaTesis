@@ -1,4 +1,11 @@
 {
   "name": "GuiaQuito",
-  "app_id": ""
+  "app_id": "b7eef22d",
+  "email": "",
+  "proxies": [
+    {
+      "path": "/ApiUrl",
+      "proxyUrl": "https://rest-guiaquito.rhcloud.com/guiaquito/api"
+    }
+  ]
 }

@@ -15,7 +15,7 @@
     dependencies: [
       'ionic',
       'ngCordova',
-      // 'ngMap',
+      'ngMap',
       'ngResource',
       'guide.controllers',
       'guide.factories',
@@ -127,7 +127,7 @@
       $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
         var loginRequired = toState.data.loginRequired;
         if (loginRequired) {
-          if (UserFactory.getUser().userId) {
+          if (UserFactory.getUser().facebookId) {
             $cordovaToast.showLongBottom('Bienvenido').then(function(success) {
               // success
             }, function(error) {
