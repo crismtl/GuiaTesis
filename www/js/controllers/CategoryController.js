@@ -24,10 +24,10 @@
     $scope.interest = '';
 
     var getLocation = function (position) {
+      console.log("Entra");
       return new Promise(function (resolve, reject) {
         currentPos = position;
         $scope.currentPos = currentPos;
-        console.log("Entra");
         console.log($scope.currentPos);
         $scope.currentPos.marker = 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small';
         resolve('Location updated');
@@ -35,9 +35,8 @@
     };
 
     var locationFound = function (position) {
-      NgMap.getMap('index').then(function (map) {
+      NgMap.getMap('categories').then(function (map) {
         getLocation(position).then(function () {
-          console.log("Entra");
           findPois(null, null).then(function () {
             WikitudeFactory.isDeviceSupported();
           });

@@ -1,20 +1,23 @@
-(function() {
+(function () {
 
   'use strict';
 
   function PointOfInterestFactory($http, ApiUrl) {
     return {
-      getFirst: function(userId, latitude,
-        longitude, types) {
-        var url;
+      getPointsOfInterest: function (userId, latitude,
+                                     longitude, type, subType) {
+        var url = ApiUrl + '/poi?latitude=' + latitude +
+          '&longitude=' + longitude + '&';
         if (userId) {
-          url = ApiUrl + '/poi/' + userId + '?latitude=' + latitude +
-            '&longitude=' + longitude + '&types=' + types;
-        } else {
-          url = ApiUrl + '/poi/?latitude=' + latitude +
-            '&longitude=' + longitude + '&types=' + types;
+          url += 'userId=' + userId + '&';
         }
-        var promise = $http.get(url).then(function(response) {
+        if (type) {
+          url += 'type=' + type.id + '&';
+        }
+        if (subType) {
+          url += 'subType=' + subType.id + "&";
+        }
+        var promise = $http.get(url).then(function (response) {
           return response.data;
         });
         return promise;
