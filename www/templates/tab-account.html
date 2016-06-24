@@ -1,10 +1,51 @@
-<ion-view view-title="Account">
-  <ion-content>
-    <h1>Mi cuenta</h1>
-    <!-- <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list> -->
-  </ion-content>
-</ion-view>
+<ion-view view-title="Mi Perfil">
+  <ion-content class="padding">
+    <div id="profile-bg"></div>
+    <div id="content">
+      <div id="profile-info">
+        <img id="profile-image" ng-src="{{user.img}}">
+        <h3 id="profile-name">{{user.firstName}}
+          {{user.lastName}}</h3>
+        <!-- <span id="profile-description">
+          <p>
+            <i ng-class="badgesClass"></i>
+            <p>
+              {{numberOfTrees}}
+              árboles apadrinados
+              <br>
+            </p>
+          </p>
+        </span> -->
+        </div>
+        <div class="list">
+          <div class="item item-icon-left">
+            <i class="icon ion-email"></i>
+            {{user.email}}
+          </div>
+          <!-- <div class="item item-icon-left">
+            <i class="icon ion-calendar"></i>
+            {{birthday}}
+          </div> -->
+          <div class="item">
+            <button ng-click="logout()" class="button button-block button-assertive">
+              Salir
+            </button>
+          </div>
+        </div>
+        <!-- <div class="bottom-content row">
+        <div class="col col-bottom">
+          <a class="icon-left ion-social-facebook facebook-sign-in button button-block" ng-click="facebookSignIn()">
+                        Vincular con Facebook
+                    </a>
+        </div>
+      </div>
+      <div class="bottom-content row">
+        <div class="col col-bottom">
+          <a class="icon-left ion-social-twitter twitter-sign-in button button-block" ng-click="facebookSignIn()">
+                        Vincular con Twitter
+                    </a>
+        </div>
+      </div> -->
+      </div>
+    </ion-content>
+  </ion-view>

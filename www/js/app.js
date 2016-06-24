@@ -95,7 +95,7 @@
     .state('tab.account', {
       url: '/account',
       data: {
-        loginRequired: false
+        loginRequired: true
       },
       views: {
         'tab-account': {
