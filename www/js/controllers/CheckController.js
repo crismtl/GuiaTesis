@@ -2,24 +2,28 @@
 
   'use strict';
 
-  function CheckController($state, UserFactory) {
-    // facebookConnectPlugin.getLoginStatus(function (success) {
-    //   if (success.status === 'connected') {
-    //    
-    //     console.log('getLoginStatus', success.status);
-    //   }
-    // });
-
-
-    if ($state.current.name == 'tab.interest') {
-      if (UserFactory.getUser()) {
-        console.log('Entraaaaaaaaaa!!!');
-        $state.go('tab.map');
-      } else {
-        console.log('Entraaaaaaaaaa!!! 2');
+  function CheckController($state, $ionicHistory, UserFactory, FacebookFactory) {
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+    facebookConnectPlugin.getLoginStatus(function (success) {
+      if (success.status === 'connected') {
+        console.log('getLoginStatus', success.status);
+        FacebookFactory.getFacebookProfileInfo(success.authResponse)
+          .then(function (profileInfo) {
+            var user = FacebookFactory.convertUser(profileInfo, success.authResponse.accessToken);
+            // UserFactory.factory.update(user, function (response) {
+            //   UserFactory.setUser(response);
+            // });
+            $state.go('tab.map');
+          }, function (fail) {
+            console.log('profile info fail', fail);
+          });
+      }
+      else {
         $state.go('tab.login');
       }
-    }
+    });
   }
 
   angular.module('guide.controllers')

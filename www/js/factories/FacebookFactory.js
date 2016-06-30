@@ -1,34 +1,42 @@
 (function () {
   'use strict';
 
-  function UserFactory($resource, ApiUrl) {
-    return {
-      setUser: function (user) {
-        window.localStorage.user = JSON.stringify(user);
+  function FacebookFactory($q) {
+    var factory = {
+      getFacebookProfileInfo: function (authResponse) {
+        var info = $q.defer();
+
+        facebookConnectPlugin.api('/me?fields=id,first_name,last_name,birthday,email&access_token=' + authResponse.accessToken, null,
+          function (response) {
+            info.resolve(response);
+          },
+          function (response) {
+            info.reject(response);
+          }
+        );
+        return info.promise;
       },
 
-      getUser: function () {
-        return JSON.parse(window.localStorage.user || null);
-      },
-
-      factory: $resource(ApiUrl + '/user/:userId', {
-        userId: '@userId'
-      }),
-
-      getUserServer: function (userResponse) {
+      convertUser: function (profileInfo, accessToken) {
         return {
-          facebookId: userResponse.userId,
-          firstName: userResponse.firstName,
-          lastName: userResponse.lastName,
-          birthday: userResponse.birthday,
-          email: userResponse.email,
-          facebookToken: userResponse.authResponse.accessToken
-        };
+          facebookId: profileInfo.id,
+          firstName: profileInfo.first_name,
+          lastName: profileInfo.last_name,
+          birthday: factory.getDateFromFacebook(profileInfo.birthday),
+          email: profileInfo.email,
+          facebookToken: accessToken
+        }
+      },
+
+      getDateFromFacebook: function (date) {
+        var current = date.split('/');
+        return new Date(current[2], current[0] - 1, current[1]);
       }
-    }
+    };
+    return factory;
   }
 
   angular.module('guide.factories')
-    .factory('UserFactory', UserFactory);
+    .factory('FacebookFactory', FacebookFactory);
 
 })();

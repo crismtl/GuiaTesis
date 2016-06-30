@@ -61,7 +61,7 @@
           url: '/interest',
           views: {
             'check': {
-              templateUrl: 'templates/login.html',
+              templateUrl: 'templates/blank.html',
               controller: 'CheckController'
             }
           }
