@@ -95,12 +95,12 @@
                   });
                 });
 
-                $state.go('tab.interest');
+                $state.go('tab.map');
               }, function(fail) {
                 console.log('profile info fail', fail);
               });
           } else {
-            $state.go('tab.interest');
+            $state.go('tab.map');
           }
         } else {
           console.log('getLoginStatus', success.status);

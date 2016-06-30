@@ -7,6 +7,7 @@
   </ion-header-bar>
   <ion-content>
     <h1 style="text-align: center">{{selectedPoi.name}}</h1>
-    <p>{{selectedPoi.description}}</p>
+    <p>{{selectedPoi.content.description}}</p>
+    <a ng-href="foursquare.com/v/{{selectedPoi.placeId}}">Ver en Foursquare</a>
   </ion-content>
 </ion-modal-view>

@@ -24,8 +24,7 @@
           <img ng-src="{{currentPos.marker}}">
         </custom-marker>
         <custom-marker ng-repeat="m in markers" position="{{m.latitude}}, {{m.longitude}}">
-          <!-- <a ng-click="openModal(m)"><img ng-src="{{m.icon}}"></a> -->
-          <img ng-src="{{m.icon}}">
+          <a ng-click="openModal(m)"><img ng-src="{{m.icon}}"></a>
         </custom-marker>
       </ng-map>
     </div>
