@@ -74,18 +74,12 @@
               templateUrl: 'templates/login.html',
               controller: 'LoginController'
             }
-          },
-          data: {
-            loginRequired: false
           }
         })
 
         // Each tab has its own nav history stack:
         .state('tab.category', {
           url: '/category',
-          data: {
-            loginRequired: false
-          },
           views: {
             'tab-category': {
               templateUrl: 'templates/tab-category-map.html',
@@ -96,9 +90,6 @@
 
         .state('tab.map', {
           url: '/map',
-          data: {
-            loginRequired: true
-          },
           views: {
             'check': {
               templateUrl: 'templates/tab-interest-map.html'
@@ -120,13 +111,30 @@
         //   }
         // })
 
+        .state('tab.profile', {
+          url: '/profile',
+          views: {
+            'tab-profile': {
+              templateUrl: 'templates/blank.html',
+              controller: 'AccountCheckController'
+            }
+          }
+        })
+
+        .state('tab.loginInAccount', {
+          url: '/login-in-account',
+          views: {
+            'tab-profile': {
+              templateUrl: 'templates/login.html',
+              controller: 'LoginController'
+            }
+          }
+        })
+
         .state('tab.account', {
           url: '/account',
-          data: {
-            loginRequired: true
-          },
           views: {
-            'tab-account': {
+            'tab-profile': {
               templateUrl: 'templates/tab-account.html',
               controller: 'AccountController'
             }
