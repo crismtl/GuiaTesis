@@ -14,17 +14,15 @@
       compassOptions = {
         frequency: 120000
       },
-      currentPos,
-      pointsOfInterest;
+      currentPos;
 
     $scope.mapsKey = 'https://maps.googleapis.com/maps/api/js?key=' + MapsKey;
 
     $scope.markers = [];
     $scope.interests = InterestTypeFactory.factory.query();
-    $scope.interest = '';
+    $scope.interest = {};
 
     var getLocation = function (position) {
-      console.log("Entra");
       return new Promise(function (resolve, reject) {
         currentPos = position;
         $scope.currentPos = currentPos;
@@ -78,8 +76,8 @@
 
     $scope.centerOnCurrentPosition = function () {
       $scope.loading = $ionicLoading.show({
-        content: 'Obteniendo ubicación actual...',
-        showBackdrop: false
+        template: 'Obteniendo ubicación actual...',
+        noBackdrop: true
       });
 
       //Basta con el watch?
@@ -108,6 +106,16 @@
             resolve('Pois resolved');
           });
       });
+    };
+
+    $scope.changeInterest = function (interest) {
+      $scope.interest = interest;
+      // UserInterestTypeFactory.factory.save({
+      //   userId: UserFactory.getUser().id,
+      //   interestType: $scope.interest
+      // }, function (success) {
+      //   findPois($scope.interest, null);
+      // });
     };
 
     var createMarker = function (place) {

@@ -1,4 +1,4 @@
-<ion-view view-title="Puntos de Interés por Categoría">
+<ion-view view-title="Explorar Categorías">
   <ion-nav-buttons side="right">
     <button ng-click="centerOnCurrentPosition()" class="button button-icon icon ion-pinpoint"></button>
   </ion-nav-buttons>
@@ -8,8 +8,10 @@
       <div class="input-label">
         Interés:
       </div>
-      <select name="type" multiple ng-model="interest" ng-options="interest.nameEs for interest in interests"
-              ng-change="findPois(interest)">
+      <select name="type"
+              ng-model="interest"
+              ng-options="interest.name for interest in interests"
+              ng-change="changeInterest(interest)">
         <option style="display:none" value="">Seleccione...</option>
       </select>
     </label>

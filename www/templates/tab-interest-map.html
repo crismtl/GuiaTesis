@@ -1,9 +1,26 @@
 <ion-view view-title="Mis intereses">
+
+
   <ion-nav-buttons side="right">
     <button ng-click="centerOnCurrentPosition()" class="button button-icon icon ion-pinpoint"></button>
   </ion-nav-buttons>
+
   <ion-content scroll="false">
-    hola xavier como estas
+    <div class="map-interest-wrap" data-tap-disabled="true" map-lazy-load="https://maps.google.com/maps/api/js"
+         map-lazy-load-params="{{mapsKey}}">
+      <ng-map id="categories" center="[{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}]"
+              style="height: 100%" default-style="false"
+              map-type-control="false"
+              street-view-control="false"
+              zoom="16">
+        <custom-marker id="user" position="{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}">
+          <img ng-src="{{currentPos.marker}}">
+        </custom-marker>
+        <custom-marker ng-repeat="m in markers" position="{{m.latitude}}, {{m.longitude}}">
+          <a ng-click="openModal(m)"><img ng-src="{{m.icon}}"></a>
+        </custom-marker>
+      </ng-map>
+    </div>
   </ion-content>
 
 </ion-view>

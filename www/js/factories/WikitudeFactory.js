@@ -5,7 +5,7 @@
   function WikitudeFactory(UserFactory) {
     var wikitudePlugin = {
 
-      plugin: '',//cordova.require("com.wikitude.phonegap.WikitudePlugin.WikitudePlugin"),
+      plugin: {},
 
       params: {
         path: 'www/ar.html',

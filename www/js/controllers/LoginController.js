@@ -2,7 +2,11 @@
 
   'use strict';
 
-  function LoginController($scope, $state, $q, UserFactory, $ionicLoading, UtilsFactory, FacebookFactory) {
+  function LoginController($scope, $state, $ionicHistory, UserFactory, $ionicLoading, FacebookFactory) {
+    $ionicHistory.nextViewOptions({
+      disableBack: true
+    });
+
     var fbLoginSuccess = function (response) {
       if (!response.authResponse) {
         fbLoginError("Cannot find the authResponse");

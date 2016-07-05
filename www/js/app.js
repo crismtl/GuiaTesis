@@ -25,7 +25,7 @@
 
   angular.module(guide.MODULE, guide.dependencies)
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, WikitudeFactory) {
       $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -38,6 +38,7 @@
           // org.apache.cordova.statusbar required
           StatusBar.styleDefault();
         }
+        WikitudeFactory.plugin = cordova.require('com.wikitude.phonegap.WikitudePlugin.WikitudePlugin');
       });
     })
 
@@ -60,7 +61,7 @@
         .state('tab.interest', {
           url: '/interest',
           views: {
-            'check': {
+            'interest': {
               templateUrl: 'templates/blank.html',
               controller: 'CheckController'
             }
@@ -70,7 +71,7 @@
         .state('tab.login', {
           url: '/login',
           views: {
-            'check': {
+            'interest': {
               templateUrl: 'templates/login.html',
               controller: 'LoginController'
             }
@@ -91,9 +92,9 @@
         .state('tab.map', {
           url: '/map',
           views: {
-            'check': {
-              templateUrl: 'templates/tab-interest-map.html'
-              // controller: 'AccountCtrl',
+            'interest': {
+              templateUrl: 'templates/tab-interest-map.html',
+              controller: 'InterestController'
             }
           }
         })

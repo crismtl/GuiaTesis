@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function CategoryController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaDeviceOrientation,
+  function InterestController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaDeviceOrientation,
                               NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
                               SessionFactory, WikitudeFactory, MapsKey) {
 
@@ -14,21 +14,19 @@
       compassOptions = {
         frequency: 120000
       },
-      currentPos,
-      pointsOfInterest;
+      currentPos;
 
     $scope.mapsKey = 'https://maps.googleapis.com/maps/api/js?key=' + MapsKey;
 
     $scope.markers = [];
     $scope.interests = InterestTypeFactory.factory.query();
-    $scope.interest = '';
+    $scope.interest = {};
 
     var getLocation = function (position) {
-      console.log("Entra");
       return new Promise(function (resolve, reject) {
         currentPos = position;
         $scope.currentPos = currentPos;
-        console.log($scope.currentPos);
+        //TODO: definir una imagen
         $scope.currentPos.marker = 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small';
         resolve('Location updated');
       });
@@ -37,15 +35,13 @@
     var locationFound = function (position) {
       NgMap.getMap('categories').then(function (map) {
         getLocation(position).then(function () {
-          findPois(null, null).then(function () {
-            WikitudeFactory.isDeviceSupported();
-          });
+          findPois(null, null);
         });
       });
     };
 
     var locationNotFound = function (error) {
-      //TODO: verificar si existe alguna solucion para la superposicion de alerts de ionic, sino usar alert js
+      //TODO: cambiar toast
       // alert('No se pudo obtener la ubicación');
       var alertPopup = $ionicPopup.alert({
         title: 'Error',
@@ -59,6 +55,7 @@
 
     $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
 
+    //Se va a monitorear la posicion?
     var watch = $cordovaDeviceOrientation.watchHeading(compassOptions).then(null,
       function (error) {
       },
@@ -79,10 +76,11 @@
 
     $scope.centerOnCurrentPosition = function () {
       $scope.loading = $ionicLoading.show({
-        content: 'Obteniendo ubicación actual...',
-        showBackdrop: false
+        template: 'Obteniendo ubicación actual...',
+        noBackdrop: true
       });
 
+      //Basta con el watch?
       $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
         getLocation(position).then(function () {
           $cordovaDeviceOrientation.getCurrentHeading().then(function (result) {
@@ -102,7 +100,6 @@
           .then(function (data) {
             $scope.markers = [];
             for (var i = 0; i < data.length; i++) {
-              // data[i].position = i;
               $scope.markers.push(createMarker(data[i]));
             }
             WikitudeFactory.pois = $scope.markers;
@@ -111,10 +108,19 @@
       });
     };
 
+    $scope.changeInterest = function (interest) {
+      $scope.interest = interest;
+      // UserInterestTypeFactory.factory.save({
+      //   userId: UserFactory.getUser().id,
+      //   interestType: $scope.interest
+      // }, function (success) {
+      //   findPois($scope.interest, null);
+      // });
+    };
+
     var createMarker = function (place) {
       var marker = place;
       marker.animation = google.maps.Animation.DROP;
-      // marker.icon = 'img/' + place.icon;
       return marker;
     };
 
@@ -129,10 +135,7 @@
     });
 
     $scope.openModal = function (marker) {
-      $scope.selectedPoi = {
-        name: marker.name,
-        description: marker.description
-      };
+      $scope.selectedPoi = marker;
       $scope.modal.show();
     };
 
@@ -146,5 +149,5 @@
   }
 
   angular.module('guide.controllers')
-    .controller('CategoryController', CategoryController);
+    .controller('InterestController', InterestController);
 })();

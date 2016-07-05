@@ -11,8 +11,10 @@
         return JSON.parse(window.localStorage.user || null);
       },
 
-      factory: $resource(ApiUrl + '/user/:userId', {
-        userId: '@userId'
+      factory: $resource(ApiUrl + '/user/:id', null, {
+        update: {
+          method: 'PUT'
+        }
       }),
 
       getUserServer: function (userResponse) {
