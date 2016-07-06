@@ -34,7 +34,11 @@
       "id": "phonegap-facebook-plugin"
     },
     "cordova-plugin-geolocation",
-    "cordova-plugin-device-orientation"
+    "cordova-plugin-device-orientation",
+    {
+      "locator": "https://github.com/Wikitude/wikitude-cordova-plugin.git",
+      "id": "com.wikitude.phonegap.WikitudePlugin"
+    }
   ],
   "cordovaPlatforms": [
     "android"
