@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes" name="viewport">
+
+  <title>Guía de Quito</title>
+
+  <script src="architect://architect.js"></script>
+
+  <link rel="stylesheet" href="css/ar.css">
+  <link rel="stylesheet" href="lib/angular.panels/dist/angular.panels.min.css">
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+  <script type="text/javascript" src="lib/angular.panels/dist/angular.panels.min.js"></script>
+  <script type="text/javascript" src="js/ar-app.js"></script>
+
+  <script type="text/javascript" src="js/Marker.js"></script>
+  <script type="text/javascript" src="js/World.js"></script>
+  <script type="text/javascript" src="js/Radar.js"></script>
+</head>
+
+<body id="page-ar" ng-app="ar" ng-controller="arCtrl">
+
+<div class="radarContainer_left" id="radarContainer"></div>
+
+<div class="bar bar-footer bar-positive" ng-show="showBar">
+  <h1 class="title">Distance: {{marker.distanceToUserValue}}</h1>
+  <button class="button icon ion-navicon pull-right" ng-click="openPanel()"></button>
+</div>
+<div class="bar bar-subfooter bar-positive" ng-show="showBar">
+  <h1 class="title">{{marker.name}}</h1>
+</div>
+
+<div data-panels="true"></div>
+</body>
+
+</html>

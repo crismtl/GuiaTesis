@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="ec.edu.epn.guia" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>GuiaQuito</name>
+<widget id="ec.edu.epn.guia" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
+  <name>Guia de Quito</name>
   <description>
-    La aplicación que te ayuda a descubrir nuevos sitios de interés en Quito.
+    La aplicación que te ayuda a descubrir sitios de interés en Quito.
   </description>
   <author email="xavierxc14@gmail.com" href="http://www.epn.edu.ec/">
     Xavier Ñauñay

@@ -40,12 +40,8 @@
             template: 'Logging in...'
           });
 
-          facebookConnectPlugin.login(['public_profile', 'user_birthday', 'email'], fbLoginSuccess, fbLoginError);
+          facebookConnectPlugin.login(['public_profile', 'user_birthday', 'email', 'user_likes'], fbLoginSuccess, fbLoginError);
       });
-    };
-
-    $scope.skipLogIn = function () {
-      $state.go('tab.category');
     };
 
   }

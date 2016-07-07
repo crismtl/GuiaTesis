@@ -1,0 +1,34 @@
+<div class="pane-head">
+    <div class="bar bar-header bar-positive">
+        <h1 class="title">Details</h1>
+        <button class="button icon ion-close" data-ng-click="panels.close();">Close</button>
+    </div>
+</div>
+<div class="pane-body content has-header padding" style="text-align: center">
+    <div class="row">
+        <h3>{{marker.name}}</h3>
+    </div>
+
+    <div class="row">
+        <p>{{marker.content.address}}</p>
+    </div>
+
+    <div class="row">
+        <p style="text-align: justify" ng-bind-html="marker.description"></p>
+    </div>
+
+    <a class="button button-block button-positive icon icon-left ion-android-call button-size"
+       ng-href="tel: {{marker.content.phoneNumber}}"
+       ng-show="marker.content.phoneNumber">Call</a>
+
+    <a class="button button-block button-positive icon icon-left ion-android-open button-size"
+       ng-click="openBrowser()"
+       ng-show="marker.content.website">Web Site</a>
+
+    <a class="button button-block button-positive icon icon-left ion-map button-size"
+       ng-click="openMaps()"
+       ng-show="marker.content.url">More information (Google Maps)</a>
+
+    <a class="button button-block button-positive icon icon-left ion-navigate button-size"
+       ng-click="launchNavigator()">Obtain Direction's</a>
+</div>
