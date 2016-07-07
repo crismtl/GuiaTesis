@@ -22,6 +22,12 @@
     $scope.interests = InterestTypeFactory.factory.query();
     $scope.interest = {};
 
+    $scope.$on('$ionicView.enter', function () {
+      if (currentPos) {
+        findPois(null, null);
+      }
+    });
+
     var getLocation = function (position) {
       return new Promise(function (resolve, reject) {
         currentPos = position;

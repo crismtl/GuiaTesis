@@ -9,8 +9,8 @@
       }),
       getPositionFromCoords: function(position, orientation, session) {
         var path = {
-          latitude: position.lat(),
-          longitude: position.lng(),
+          latitude: position.coords.latitude,
+          longitude: position.coords.latitude,
           orientation: orientation,
           date: new Date().getTime(),
           session: session

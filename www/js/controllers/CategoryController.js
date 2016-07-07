@@ -22,6 +22,12 @@
     $scope.interests = InterestTypeFactory.factory.query();
     $scope.interest = {};
 
+    $scope.$on('$ionicView.enter', function () {
+      if (currentPos) {
+        findPois(null, null);
+      }
+    });
+
     var getLocation = function (position) {
       return new Promise(function (resolve, reject) {
         currentPos = position;
@@ -56,8 +62,10 @@
     $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
 
     //Se va a monitorear la posicion?
+    //Cambiar el watch a position, no todos los celulares tienen compass
     var watch = $cordovaDeviceOrientation.watchHeading(compassOptions).then(null,
       function (error) {
+        console.log(error);
       },
       function (result) {
         console.log(result);

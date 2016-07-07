@@ -2,15 +2,19 @@
 
   'use strict';
 
-  function ARController($ionicHistory, WikitudeFactory) {
+  function ARController($ionicHistory, $state, $scope, WikitudeFactory) {
     var openAR = function () {
       console.log('opening AR...');
       WikitudeFactory.isDeviceSupported();
-      //TODO: navegar entre tabs, cada tab tiene un historial propio, vero como se puede hacer
-      $ionicHistory.goBack();
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      $state.go($ionicHistory.backView().stateName);
     };
 
-    openAR();
+    $scope.$on('$ionicView.enter', function () {
+      openAR();
+    });
   }
 
   angular.module('guide.controllers')
