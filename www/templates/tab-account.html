@@ -6,46 +6,33 @@
         <img id="profile-image" ng-src="{{user.img}}">
         <h3 id="profile-name">{{user.firstName}}
           {{user.lastName}}</h3>
-        <!-- <span id="profile-description">
-          <p>
-            <i ng-class="badgesClass"></i>
+        <span id="profile-description">
+          <div ng-repeat="interest in user.userInterestTypes">
             <p>
-              {{numberOfTrees}}
-              árboles apadrinados
-              <br>
+              {{interest.interestType.name}}
+            <!-- <i ng-class="badgesClass"></i> -->
+            <!-- <p>
+            </p> -->
             </p>
-          </p>
-        </span> -->
-        </div>
-        <div class="list">
-          <div class="item item-icon-left">
-            <i class="icon ion-email"></i>
-            {{user.email}}
           </div>
-          <!-- <div class="item item-icon-left">
-            <i class="icon ion-calendar"></i>
-            {{birthday}}
-          </div> -->
-          <div class="item">
-            <button ng-click="logout()" class="button button-block button-assertive">
-              Salir
-            </button>
-          </div>
-        </div>
-        <!-- <div class="bottom-content row">
-        <div class="col col-bottom">
-          <a class="icon-left ion-social-facebook facebook-sign-in button button-block" ng-click="facebookSignIn()">
-                        Vincular con Facebook
-                    </a>
-        </div>
+        </span>
       </div>
-      <div class="bottom-content row">
-        <div class="col col-bottom">
-          <a class="icon-left ion-social-twitter twitter-sign-in button button-block" ng-click="facebookSignIn()">
-                        Vincular con Twitter
-                    </a>
+      <div class="list">
+        <div class="item item-icon-left">
+          <i class="icon ion-email"></i> {{user.email}}
         </div>
-      </div> -->
+        <div class="item item-icon-left">
+          <i class="icon ion-calendar"></i> {{birthday}}
+        </div>
+        <div class="item">
+          <button ng-click="logout()" class="button button-block button-assertive">
+            Salir
+          </button>
+        </div>
+        <button ng-click="logout()" class="button button-block button-assertive">
+          Salir
+        </button>
       </div>
-    </ion-content>
-  </ion-view>
+    </div>
+  </ion-content>
+</ion-view>
