@@ -7,17 +7,23 @@
         <h3 id="profile-name">{{user.firstName}}
           {{user.lastName}}</h3>
         <span id="profile-description">
-          <div ng-repeat="interest in user.userInterestTypes">
-            <p>
-              {{interest.interestType.name}}
-            <!-- <i ng-class="badgesClass"></i> -->
-            <!-- <p>
-            </p> -->
-            </p>
+          <p>
+            Su interés es:
+          <div>
+                {{myInterest.name}}
           </div>
+          </p>
         </span>
       </div>
       <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Cambiar Interés:
+          </div>
+          <select name="type" ng-model="interest" ng-options="interest.name for interest in interests" ng-change="changeInterest(interest)">
+            <option style="display:none" value="">{{myInterest.name}}</option>
+          </select>
+        </label>
         <div class="item item-icon-left">
           <i class="icon ion-email"></i> {{user.email}}
         </div>
@@ -29,9 +35,6 @@
             Salir
           </button>
         </div>
-        <button ng-click="logout()" class="button button-block button-assertive">
-          Salir
-        </button>
       </div>
     </div>
   </ion-content>

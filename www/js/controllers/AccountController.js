@@ -2,11 +2,35 @@
 
   'use strict';
 
-  function AccountController($scope, UserFactory) {
+  function AccountController($scope, UserFactory, InterestTypeFactory, UserInterestTypeFactory) {
     $scope.user = UserFactory.getUser();
     $scope.user.img = 'http://graph.facebook.com/' + $scope.user.facebookId + '/picture?type=large';
     $scope.birthday = formatDate($scope.user.birthday);
+    $scope.myInterest = getMyInterest($scope.user.userInterestTypes);
     console.log('$scope.user', $scope.user);
+
+    $scope.interests = InterestTypeFactory.factory.query();
+    $scope.interest = {};
+
+    $scope.changeInterest = function(interest) {
+      $scope.myInterest = interest;
+      UserInterestTypeFactory.factory.save({
+        userId: UserFactory.getUser().id,
+        interestType: $scope.interest
+      }, function(success) {
+        console.log("se cambio el interes", success);
+      });
+    };
+  }
+
+  function getMyInterest(interestsArray) {
+    var interest = {};
+    angular.forEach(interestsArray, function(value, key) {
+      if (value.priority === true) {
+        interest = value.interestType;
+      }
+    });
+    return interest;
   }
 
   function formatDate(timestamp) {
