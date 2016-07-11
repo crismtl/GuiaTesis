@@ -1,17 +1,17 @@
-(function () {
+(function() {
 
   'use strict';
 
   function CategoryController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaDeviceOrientation,
-                              NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
-                              SessionFactory, WikitudeFactory, MapsKey) {
+    NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
+    SessionFactory, WikitudeFactory, MapsKey) {
 
     var options = {
         timeout: 15000,
         enableHighAccuracy: true,
         maximumAge: 0
       },
-      compassOptions = {
+      watchOptions = {
         frequency: 120000
       },
       currentPos;
@@ -22,14 +22,14 @@
     $scope.interests = InterestTypeFactory.factory.query();
     $scope.interest = {};
 
-    $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.enter', function() {
       if (currentPos) {
         findPois(null, null);
       }
     });
 
-    var getLocation = function (position) {
-      return new Promise(function (resolve, reject) {
+    var getLocation = function(position) {
+      return new Promise(function(resolve, reject) {
         currentPos = position;
         $scope.currentPos = currentPos;
         //TODO: definir una imagen
@@ -38,22 +38,22 @@
       });
     };
 
-    var locationFound = function (position) {
-      NgMap.getMap('categories').then(function (map) {
-        getLocation(position).then(function () {
+    var locationFound = function(position) {
+      NgMap.getMap('categories').then(function(map) {
+        getLocation(position).then(function() {
           findPois(null, null);
         });
       });
     };
 
-    var locationNotFound = function (error) {
+    var locationNotFound = function(error) {
       //TODO: cambiar toast
       // alert('No se pudo obtener la ubicación');
       var alertPopup = $ionicPopup.alert({
         title: 'Error',
         template: 'No se pudo obtener la ubicación'
       });
-      alertPopup.then(function (res) {
+      alertPopup.then(function(res) {
         console.log('Cerro el popup');
       });
       console.log('No se pudo obtener la ubicación: ' + error.message);
@@ -62,50 +62,44 @@
     $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
 
     //Se va a monitorear la posicion?
-    //Cambiar el watch a position, no todos los celulares tienen compass
-    var watch = $cordovaDeviceOrientation.watchHeading(compassOptions).then(null,
-      function (error) {
-        console.log(error);
+    var watch = $cordovaGeolocation.watchPosition(watchOptions);
+    watch.then(
+      null,
+      function(err) {
+        console.log(err);
       },
-      function (result) {
-        console.log(result);
-        console.log('Ubicación:', currentPos);
-        $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-          getLocation(position).then(function () {
-            console.log('Nueva Ubicación:', currentPos);
-            var path = PathFactory.getPositionFromCoords(currentPos, result.magneticHeading, SessionFactory.getSession().id);
-            console.log(path);
-            PathFactory.factory.save(path);
-          });
-        }, locationNotFound);
+      function(position) {
+        console.log('position en watch', position);
+        var path = PathFactory.getPositionFromCoords(position, SessionFactory.getSession().id);
+        console.log(path);
+        PathFactory.factory.save(path);
       });
 
     //watch.clearWatch();
 
-    $scope.centerOnCurrentPosition = function () {
+    $scope.centerOnCurrentPosition = function() {
       $scope.loading = $ionicLoading.show({
         template: 'Obteniendo ubicación actual...',
         noBackdrop: true
       });
 
       //Basta con el watch?
-      $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-        getLocation(position).then(function () {
-          $cordovaDeviceOrientation.getCurrentHeading().then(function (result) {
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+        getLocation(position).then(function() {
+          $cordovaDeviceOrientation.getCurrentHeading().then(function(result) {
             var path = PathFactory.getPositionFromCoords(currentPos, result.magneticHeading, SessionFactory.getSession().id);
             console.log(path);
             PathFactory.factory.save(path);
             $scope.loading.hide();
-          }, function (err) {
-          });
+          }, function(err) {});
         });
       }, locationNotFound);
     };
 
-    var findPois = function (interest, subInterest) {
-      return new Promise(function (resolve, reject) {
+    var findPois = function(interest, subInterest) {
+      return new Promise(function(resolve, reject) {
         PointOfInterestFactory.getPointsOfInterest(null, currentPos.coords.latitude, currentPos.coords.longitude, interest, subInterest)
-          .then(function (data) {
+          .then(function(data) {
             $scope.markers = [];
             for (var i = 0; i < data.length; i++) {
               $scope.markers.push(createMarker(data[i]));
@@ -116,7 +110,7 @@
       });
     };
 
-    $scope.changeInterest = function (interest) {
+    $scope.changeInterest = function(interest) {
       $scope.interest = interest;
       // UserInterestTypeFactory.factory.save({
       //   userId: UserFactory.getUser().id,
@@ -126,7 +120,7 @@
       // });
     };
 
-    var createMarker = function (place) {
+    var createMarker = function(place) {
       var marker = place;
       marker.animation = google.maps.Animation.DROP;
       return marker;
@@ -138,20 +132,20 @@
     $ionicModal.fromTemplateUrl('templates/interest.html', {
       scope: $scope,
       animation: 'slide-in-up'
-    }).then(function (modal) {
+    }).then(function(modal) {
       $scope.modal = modal;
     });
 
-    $scope.openModal = function (marker) {
+    $scope.openModal = function(marker) {
       $scope.selectedPoi = marker;
       $scope.modal.show();
     };
 
-    $scope.closeModal = function () {
+    $scope.closeModal = function() {
       $scope.modal.hide();
     };
 
-    $scope.$on('$destroy', function () {
+    $scope.$on('$destroy', function() {
       $scope.modal.remove();
     });
   }
