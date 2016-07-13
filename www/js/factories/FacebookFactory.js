@@ -52,6 +52,7 @@
               });
           }
           else {
+            console.log("No se conecto con facebook en getstatus");
             $ionicLoading.hide();
             $state.go(nextStateFail);
           }

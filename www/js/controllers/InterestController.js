@@ -28,6 +28,8 @@
       }
     });
 
+    SessionFactory.createSession(UserFactory.getUser().id);
+
     var getLocation = function(position) {
       return new Promise(function(resolve, reject) {
         currentPos = position;
@@ -69,10 +71,14 @@
         console.log(err);
       },
       function(position) {
-        console.log('position en watch', position);
-        var path = PathFactory.getPositionFromCoords(position, SessionFactory.getSession().id);
-        console.log(path);
-        PathFactory.factory.save(path);
+        var path;
+        $cordovaDeviceOrientation.getCurrentHeading().then(function(result) {
+          path = PathFactory.getPositionFromCoords(position, result.magneticHeading, SessionFactory.getSession().id);
+          PathFactory.factory.save(path);
+        }, function(err) {
+          path = PathFactory.getPositionFromCoords(position, null, SessionFactory.getSession().id);
+          PathFactory.factory.save(path);
+        });
       });
 
     //watch.clearWatch();

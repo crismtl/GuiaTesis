@@ -16,9 +16,13 @@
       $scope.myInterest = interest;
       UserInterestTypeFactory.factory.save({
         userId: UserFactory.getUser().id,
-        interestType: $scope.interest
+        interestType: interest
       }, function(success) {
         console.log("se cambio el interes", success);
+        var user = UserFactory.getUser();
+        user.userInterestTypes = success;
+        UserFactory.setUser(user);
+        $scope.user = UserFactory.getUser();
       });
     };
   }

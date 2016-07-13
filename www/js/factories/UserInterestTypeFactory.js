@@ -4,8 +4,11 @@
 
   function UserInterestTypeFactory($resource, ApiUrl) {
     return {
-      factory: $resource(ApiUrl + '/user-interest-type/:userInterestTypeId', {
-        userInterestTypeId: '@userInterestTypeId'
+      factory: $resource(ApiUrl + '/user-interest-type/:userInterestTypeId', null, {
+        save: {
+          method: 'POST',
+          isArray: true
+        }
       })
     }
   }

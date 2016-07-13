@@ -12,8 +12,8 @@
           latitude: position.coords.latitude,
           longitude: position.coords.latitude,
           orientation: orientation,
-          date: new Date().getTime(),
-          session: session
+          time: new Date().getTime(),
+          sessionId: session
         };
         return path;
       }

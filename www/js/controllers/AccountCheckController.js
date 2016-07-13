@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function AccountCheckController($ionicHistory, FacebookFactory) {
+  function AccountCheckController($scope, $ionicHistory, FacebookFactory) {
     $ionicHistory.nextViewOptions({
       disableBack: true
     });
@@ -11,7 +11,9 @@
       FacebookFactory.checkStatus('tab.account', 'tab.loginInAccount');
     };
 
-    checkStatus();
+    $scope.$on('$ionicView.enter', function () {
+      checkStatus();
+    });
   }
 
   angular.module('guide.controllers')

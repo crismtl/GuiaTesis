@@ -62,18 +62,21 @@
     $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
 
     //Se va a monitorear la posicion?
-    var watch = $cordovaGeolocation.watchPosition(watchOptions);
-    watch.then(
-      null,
-      function(err) {
-        console.log(err);
-      },
-      function(position) {
-        console.log('position en watch', position);
-        var path = PathFactory.getPositionFromCoords(position, SessionFactory.getSession().id);
-        console.log(path);
-        PathFactory.factory.save(path);
-      });
+    // var watch = $cordovaGeolocation.watchPosition(watchOptions);
+    // watch.then(
+    //   null,
+    //   function(err) {
+    //     console.log(err);
+    //   },
+    //   function(position) {
+    //     var path;
+    //     $cordovaDeviceOrientation.getCurrentHeading().then(function(result) {
+    //       path = PathFactory.getPositionFromCoords(position, result.magneticHeading, SessionFactory.getSession().id);
+    //     }, function(err) {
+    //       path = PathFactory.getPositionFromCoords(position, null, SessionFactory.getSession().id);
+    //     });
+    //     PathFactory.factory.save(path);
+    //   });
 
     //watch.clearWatch();
 
