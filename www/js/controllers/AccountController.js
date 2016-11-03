@@ -6,35 +6,33 @@
     $scope.user = UserFactory.getUser();
     $scope.user.img = 'http://graph.facebook.com/' + $scope.user.facebookId + '/picture?type=large';
     $scope.birthday = formatDate($scope.user.birthday);
-    $scope.myInterest = getMyInterest($scope.user.userInterestTypes);
+    $scope.myInterest = getMyInterest($scope.user.userInterestTypes).interestType;
     console.log('$scope.user', $scope.user);
 
     $scope.interests = InterestTypeFactory.factory.query();
-    $scope.interest = {};
 
     $scope.changeInterest = function(interest) {
-      $scope.myInterest = interest;
       UserInterestTypeFactory.factory.save({
         userId: UserFactory.getUser().id,
         interestType: interest
       }, function(success) {
-        console.log("se cambio el interes", success);
         var user = UserFactory.getUser();
         user.userInterestTypes = success;
         UserFactory.setUser(user);
-        $scope.user = UserFactory.getUser();
+        $scope.myInterest = getMyInterest(success).interestType;
       });
     };
   }
 
   function getMyInterest(interestsArray) {
-    var interest = {};
-    angular.forEach(interestsArray, function(value, key) {
-      if (value.priority === true) {
-        interest = value.interestType;
+    var userInterest = {};
+    for(var i = 0; i<interestsArray.length; i++){
+      if (interestsArray[i].priority == true) {
+        userInterest = interestsArray[i];
+        break;
       }
-    });
-    return interest;
+    }
+    return userInterest;
   }
 
   function formatDate(timestamp) {

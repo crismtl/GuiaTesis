@@ -21,6 +21,7 @@
           });
 
           $ionicLoading.hide();
+          //TODO: no deberia ir al mapa, ir al perfil
           $state.go('tab.map');
         }, function (fail) {
           console.log('profile info fail', fail);

@@ -42,6 +42,8 @@
             factory.getFacebookProfileInfo(success.authResponse)
               .then(function (profileInfo) {
                 var user = factory.convertUser(profileInfo, success.authResponse.accessToken);
+
+                //TODO: revizar aqui, se crea usuarios a cada rato
                 UserFactory.factory.update({id: user.id}, user, function (response) {
                   UserFactory.setUser(response);
                 });
@@ -50,9 +52,7 @@
               }, function (fail) {
                 console.log('profile info fail', fail);
               });
-          }
-          else {
-            console.log("No se conecto con facebook en getstatus");
+          } else {
             $ionicLoading.hide();
             $state.go(nextStateFail);
           }
