@@ -57,43 +57,12 @@
           controller: 'AppController'
         })
 
-        .state('tab.category', {
-          url: '/category',
-          views: {
-            'tab-category': {
-              templateUrl: 'templates/tab-category-map.html',
-              controller: 'CategoryController'
-            }
-          }
-        })
-
-        // Each tab has its own nav history stack:
-        .state('tab.interest', {
-          url: '/interest',
-          views: {
-            'tab-interest': {
-              templateUrl: 'templates/blank.html',
-              controller: 'CheckController'
-            }
-          }
-        })
-
-        .state('tab.login', {
-          url: '/login',
-          views: {
-            'tab-interest': {
-              templateUrl: 'templates/login.html',
-              controller: 'LoginController'
-            }
-          }
-        })
-
         .state('tab.map', {
           url: '/map',
           views: {
-            'tab-interest': {
-              templateUrl: 'templates/tab-interest-map.html',
-              controller: 'InterestController'
+            'tab-map': {
+              templateUrl: 'templates/tab-map.html',
+              controller: 'MapController'
             }
           }
         })
@@ -139,7 +108,7 @@
         });
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/tab/category');
+      $urlRouterProvider.otherwise('/tab/map');
 
     })
 
