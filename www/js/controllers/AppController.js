@@ -5,11 +5,12 @@
   function AppController($scope, $state, $ionicHistory, FacebookFactory, WikitudeFactory) {
     $scope.openAR = function () {
       console.log('opening AR...');
-      WikitudeFactory.isDeviceSupported();
+      var lastView = $ionicHistory.currentView().stateName;
       $ionicHistory.nextViewOptions({
         disableBack: true
       });
-      $state.go($ionicHistory.backView().stateName);
+      WikitudeFactory.isDeviceSupported();
+      $state.go(lastView);
     };
 
     $scope.checkStatus = function () {

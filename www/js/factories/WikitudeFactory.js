@@ -57,7 +57,7 @@
         // console.log(action.substring(0, 6));
         if ('openBrowser' == action) {
           wikitudePlugin.getPlugin().close();
-          cordova.InAppBrowser.open('foursquare.com/v/' + wikitudePlugin.pois[position].placeId, '_system', 'location=yes');
+          cordova.InAppBrowser.open('https://foursquare.com/v/' + wikitudePlugin.pois[position].placeId, '_system');
         } else if ('launchNavigator' == action) {
           wikitudePlugin.getPlugin().close();
           launchnavigator.navigate([wikitudePlugin.pois[position].latitude, wikitudePlugin.pois[position].longitude]);

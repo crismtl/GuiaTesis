@@ -22,8 +22,8 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     {
-      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-      "id": "cordova-plugin-x-toast"
+      "locator": "https://github.com/Wikitude/wikitude-cordova-plugin.git",
+      "id": "com.wikitude.phonegap.WikitudePlugin"
     },
     {
       "variables": {
@@ -33,14 +33,10 @@
       "locator": "https://github.com/Wizcorp/phonegap-facebook-plugin.git",
       "id": "phonegap-facebook-plugin"
     },
+    "uk.co.workingedge.phonegap.plugin.launchnavigator",
     "cordova-plugin-geolocation",
-    "cordova-plugin-device-orientation",
-    {
-      "locator": "https://github.com/Wikitude/wikitude-cordova-plugin.git",
-      "id": "com.wikitude.phonegap.WikitudePlugin"
-    },
     "cordova-plugin-network-information",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator"
+    "cordova-plugin-inappbrowser"
   ],
   "cordovaPlatforms": [
     "android"

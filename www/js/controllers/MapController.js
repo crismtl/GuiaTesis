@@ -136,7 +136,7 @@
     };
 
     $scope.openBrowser = function (placeId) {
-      $cordovaInAppBrowser.open('foursquare.com/v/' + placeId, '_system', 'location=yes');
+      $cordovaInAppBrowser.open('https://foursquare.com/v/' + placeId, '_system');
     };
   }
 
