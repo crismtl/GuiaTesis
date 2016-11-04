@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function MapController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaDeviceOrientation,
+  function MapController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaLaunchNavigator,
                          NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
                          SessionFactory, WikitudeFactory, MapsKey) {
 
@@ -141,6 +141,10 @@
     $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
+
+    $scope.launchNavigator = function () {
+      $cordovaLaunchNavigator.navigate([$scope.selectedPoi.latitude, $scope.selectedPoi.longitude]);
+    };
   }
 
   angular.module('guide.controllers')

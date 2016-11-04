@@ -9,5 +9,7 @@
     <h1 style="text-align: center">{{selectedPoi.name}}</h1>
     <p>{{selectedPoi.content.description}}</p>
     <a ng-href="foursquare.com/v/{{selectedPoi.placeId}}">Ver en Foursquare</a>
+    <a class="button button-block button-positive icon icon-left ion-navigate button-size"
+       ng-click="launchNavigator()">Obtener Direcciones</a>
   </ion-content>
 </ion-modal-view>

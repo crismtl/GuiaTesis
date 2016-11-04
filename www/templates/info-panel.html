@@ -10,25 +10,9 @@
     </div>
 
     <div class="row">
-        <p>{{marker.content.address}}</p>
+        <p style="text-align: justify" ng-bind-html="marker.content.description"></p>
     </div>
-
-    <div class="row">
-        <p style="text-align: justify" ng-bind-html="marker.description"></p>
-    </div>
-
-    <a class="button button-block button-positive icon icon-left ion-android-call button-size"
-       ng-href="tel: {{marker.content.phoneNumber}}"
-       ng-show="marker.content.phoneNumber">Call</a>
-
-    <a class="button button-block button-positive icon icon-left ion-android-open button-size"
-       ng-click="openBrowser()"
-       ng-show="marker.content.website">Web Site</a>
-
-    <a class="button button-block button-positive icon icon-left ion-map button-size"
-       ng-click="openMaps()"
-       ng-show="marker.content.url">More information (Google Maps)</a>
 
     <a class="button button-block button-positive icon icon-left ion-navigate button-size"
-       ng-click="launchNavigator()">Obtain Direction's</a>
+       ng-click="launchNavigator()">Obtener Direcciones</a>
 </div>
