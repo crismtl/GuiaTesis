@@ -18,11 +18,9 @@
           var user = FacebookFactory.convertUser(profileInfo, response.authResponse.accessToken);
           UserFactory.factory.save(user, function (response) {
             UserFactory.setUser(response);
+            $ionicLoading.hide();
+            $state.go('tab.map');
           });
-
-          $ionicLoading.hide();
-          //TODO: no deberia ir al mapa, ir al perfil
-          $state.go('tab.map');
         }, function (fail) {
           console.log('profile info fail', fail);
         });

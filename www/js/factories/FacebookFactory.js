@@ -46,9 +46,9 @@
                 //TODO: revizar aqui, se crea usuarios a cada rato
                 UserFactory.factory.update({id: user.id}, user, function (response) {
                   UserFactory.setUser(response);
+                  $ionicLoading.hide();
+                  $state.go(nextStateSuccess);
                 });
-                $ionicLoading.hide();
-                $state.go(nextStateSuccess);
               }, function (fail) {
                 console.log('profile info fail', fail);
               });

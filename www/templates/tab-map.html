@@ -6,7 +6,18 @@
   </ion-nav-buttons>
 
   <ion-content scroll="false">
-    <div class="map-interest-wrap" data-tap-disabled="true" map-lazy-load="https://maps.google.com/maps/api/js"
+    <label class="item item-input item-select">
+      <div class="input-label">
+        Interés:
+      </div>
+      <select name="type"
+              ng-model="interest"
+              ng-options="interest.name for interest in interests"
+              ng-change="changeInterest(interest)">
+        <option style="display:none" value="">Explorar Categorías</option>
+      </select>
+    </label>
+    <div class="map-wrap" data-tap-disabled="true" map-lazy-load="https://maps.google.com/maps/api/js"
          map-lazy-load-params="{{mapsKey}}">
       <ng-map id="categories" center="[{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}]"
               style="height: 100%" default-style="false"

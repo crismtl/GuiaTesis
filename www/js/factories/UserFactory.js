@@ -15,18 +15,7 @@
         update: {
           method: 'PUT'
         }
-      }),
-
-      getUserServer: function (userResponse) {
-        return {
-          facebookId: userResponse.userId,
-          firstName: userResponse.firstName,
-          lastName: userResponse.lastName,
-          birthday: userResponse.birthday,
-          email: userResponse.email,
-          facebookToken: userResponse.authResponse.accessToken
-        };
-      }
+      })
     }
   }
 

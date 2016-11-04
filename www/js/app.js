@@ -24,7 +24,7 @@
 
   angular.module(guide.MODULE, guide.dependencies)
 
-    .run(function ($ionicPlatform, WikitudeFactory) {
+    .run(function ($ionicPlatform, WikitudeFactory, $rootScope, $ionicLoading) {
       $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -37,6 +37,16 @@
           StatusBar.styleDefault();
         }
         WikitudeFactory.plugin = cordova.require('com.wikitude.phonegap.WikitudePlugin.WikitudePlugin');
+
+        $rootScope.$on('$cordovaNetwork:offline', function (event, networkState) {
+          $ionicLoading.show({
+            template: 'Usted debería tener una conexión activa a Internet'
+          });
+        })
+
+        $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
+          $ionicLoading.hide();
+        })
       });
     })
 

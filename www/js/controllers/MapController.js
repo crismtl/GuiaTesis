@@ -1,10 +1,10 @@
-(function() {
+(function () {
 
   'use strict';
 
   function MapController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaDeviceOrientation,
-                              NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
-                              SessionFactory, WikitudeFactory, MapsKey) {
+                         NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
+                         SessionFactory, WikitudeFactory, MapsKey) {
 
     var options = {
         timeout: 15000,
@@ -22,43 +22,44 @@
     $scope.interests = InterestTypeFactory.factory.query();
     $scope.interest = {};
 
-    $scope.$on('$ionicView.enter', function() {
+    $scope.$on('$ionicView.enter', function () {
+      //TODO: buscar la posicion
       if (currentPos) {
         findPois(null, null);
+        var image = UserFactory.getUser() ? 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small'
+          : 'img/default-profile.jpg';
+        $scope.currentPos.marker = image;
       }
     });
 
-    //TODO: Descomentar para crear sesiones, utilizar operador ternario para cuando no esta logueado
-    // SessionFactory.createSession(UserFactory.getUser(a).id);
-
-    var getLocation = function(position) {
-      return new Promise(function(resolve, reject) {
+    var getLocation = function (position) {
+      return new Promise(function (resolve, reject) {
         currentPos = position;
         $scope.currentPos = currentPos;
-        //TODO: definir una imagen
+        //TODO: centrar mapa
         var image = UserFactory.getUser() ? 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small'
-          :'img/default-profile.jpg';
+          : 'img/default-profile.jpg';
         $scope.currentPos.marker = image;
         resolve('Location updated');
       });
     };
 
-    var locationFound = function(position) {
-      NgMap.getMap('categories').then(function(map) {
-        getLocation(position).then(function() {
+    var locationFound = function (position) {
+      NgMap.getMap('categories').then(function (map) {
+        getLocation(position).then(function () {
           findPois(null, null);
         });
       });
     };
 
-    var locationNotFound = function(error) {
+    var locationNotFound = function (error) {
       //TODO: cambiar toast
       // alert('No se pudo obtener la ubicación');
       var alertPopup = $ionicPopup.alert({
         title: 'Error',
         template: 'No se pudo obtener la ubicación'
       });
-      alertPopup.then(function(res) {
+      alertPopup.then(function (res) {
         console.log('Cerro el popup');
       });
       console.log('No se pudo obtener la ubicación: ' + error.message);
@@ -66,49 +67,32 @@
 
     $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
 
-    //Se va a monitorear la posicion?
-    var watch = $cordovaGeolocation.watchPosition(watchOptions);
-    watch.then(
-      null,
-      function(err) {
-        console.log(err);
-      },
-      function(position) {
-        var path;
-        $cordovaDeviceOrientation.getCurrentHeading().then(function(result) {
-          path = PathFactory.getPositionFromCoords(position, result.magneticHeading, SessionFactory.getSession().id);
-          PathFactory.factory.save(path);
-        }, function(err) {
-          path = PathFactory.getPositionFromCoords(position, null, SessionFactory.getSession().id);
-          PathFactory.factory.save(path);
-        });
-      });
-
-    //watch.clearWatch();
-
-    $scope.centerOnCurrentPosition = function() {
-      $scope.loading = $ionicLoading.show({
+    $scope.centerOnCurrentPosition = function () {
+      $ionicLoading.show({
         template: 'Obteniendo ubicación actual...',
         noBackdrop: true
       });
 
       //Basta con el watch?
-      $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-        getLocation(position).then(function() {
-          $cordovaDeviceOrientation.getCurrentHeading().then(function(result) {
-            var path = PathFactory.getPositionFromCoords(currentPos, result.magneticHeading, SessionFactory.getSession().id);
-            console.log(path);
-            PathFactory.factory.save(path);
-            $scope.loading.hide();
-          }, function(err) {});
+      $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
+        getLocation(position).then(function () {
+          $ionicLoading.hide();
         });
       }, locationNotFound);
     };
 
-    var findPois = function(interest, subInterest) {
-      return new Promise(function(resolve, reject) {
-        PointOfInterestFactory.getPointsOfInterest(UserFactory.getUser().id, currentPos.coords.latitude, currentPos.coords.longitude, interest, subInterest)
-          .then(function(data) {
+    var findPois = function (interest, subInterest) {
+      return new Promise(function (resolve, reject) {
+        console.log('findpois user', UserFactory.getUser());
+        var user = UserFactory.getUser();
+        var userId = user ? user.id : null;
+        PointOfInterestFactory.getPointsOfInterest(userId, currentPos.coords.latitude, currentPos.coords.longitude, interest, subInterest)
+          .then(function (data) {
+            if (user) {
+              UserFactory.factory.get({id: UserFactory.getUser().id}, function (user) {
+                UserFactory.setUser(user);
+              });
+            }
             $scope.markers = [];
             for (var i = 0; i < data.length; i++) {
               $scope.markers.push(createMarker(data[i]));
@@ -119,17 +103,17 @@
       });
     };
 
-    $scope.changeInterest = function(interest) {
-      $scope.interest = interest;
+    $scope.changeInterest = function (interest) {
+      // $scope.interest = interest;
       // UserInterestTypeFactory.factory.save({
       //   userId: UserFactory.getUser().id,
       //   interestType: $scope.interest
       // }, function (success) {
-      //   findPois($scope.interest, null);
+      findPois(interest, null);
       // });
     };
 
-    var createMarker = function(place) {
+    var createMarker = function (place) {
       var marker = place;
       marker.animation = google.maps.Animation.DROP;
       return marker;
@@ -141,20 +125,20 @@
     $ionicModal.fromTemplateUrl('templates/interest.html', {
       scope: $scope,
       animation: 'slide-in-up'
-    }).then(function(modal) {
+    }).then(function (modal) {
       $scope.modal = modal;
     });
 
-    $scope.openModal = function(marker) {
+    $scope.openModal = function (marker) {
       $scope.selectedPoi = marker;
       $scope.modal.show();
     };
 
-    $scope.closeModal = function() {
+    $scope.closeModal = function () {
       $scope.modal.hide();
     };
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $scope.modal.remove();
     });
   }
