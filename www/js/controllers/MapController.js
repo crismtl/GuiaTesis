@@ -3,8 +3,7 @@
   'use strict';
 
   function MapController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaLaunchNavigator,
-                         NgMap, UserFactory, PathFactory, PointOfInterestFactory, InterestTypeFactory,
-                         SessionFactory, WikitudeFactory, MapsKey) {
+                         NgMap, UserFactory, PointOfInterestFactory, InterestTypeFactory, WikitudeFactory, MapsKey) {
 
     var options = {
         timeout: 15000,

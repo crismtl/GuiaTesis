@@ -77,26 +77,6 @@
           }
         })
 
-        .state('tab.ar', {
-          url: '/ar',
-          views: {
-            'tab-ar': {
-              templateUrl: 'templates/blank.html',
-              controller: 'ARController'
-            }
-          }
-        })
-
-        .state('tab.profile', {
-          url: '/profile',
-          views: {
-            'tab-profile': {
-              templateUrl: 'templates/blank.html',
-              controller: 'AccountCheckController'
-            }
-          }
-        })
-
         .state('tab.loginInAccount', {
           url: '/login-in-account',
           views: {
