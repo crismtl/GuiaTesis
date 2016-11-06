@@ -19,13 +19,13 @@
     </label>
     <div class="map-wrap" data-tap-disabled="true" map-lazy-load="https://maps.google.com/maps/api/js"
          map-lazy-load-params="{{mapsKey}}">
-      <ng-map id="categories" center="[{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}]"
+      <ng-map id="map" center="[{{currentPosition.position.coords.latitude}}, {{currentPosition.position.coords.longitude}}]"
               style="height: 100%" default-style="false"
               map-type-control="false"
               street-view-control="false"
               zoom="16">
-        <custom-marker id="user" position="{{currentPos.coords.latitude}}, {{currentPos.coords.longitude}}">
-          <img ng-src="{{currentPos.marker}}" style="max-height: 50px; max-width: 50px;">
+        <custom-marker id="user" position="{{currentPosition.position.coords.latitude}}, {{currentPosition.position.coords.longitude}}">
+          <img ng-src="{{currentPosition.marker}}" style="max-height: 50px; max-width: 50px;">
         </custom-marker>
         <custom-marker ng-repeat="m in markers" position="{{m.latitude}}, {{m.longitude}}">
           <a ng-click="openModal(m)"><img ng-src="{{m.icon}}"></a>

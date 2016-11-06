@@ -3,48 +3,39 @@
   'use strict';
 
   function MapController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaLaunchNavigator,
+                         $interval,
                          NgMap, UserFactory, PointOfInterestFactory, InterestTypeFactory, WikitudeFactory, MapsKey) {
 
     var options = {
-        timeout: 15000,
-        enableHighAccuracy: true,
-        maximumAge: 0
-      },
-      watchOptions = {
-        frequency: 120000
-      },
-      currentPos;
+      timeout: 15000,
+      enableHighAccuracy: true,
+      maximumAge: 2000
+    };
 
     $scope.mapsKey = 'https://maps.googleapis.com/maps/api/js?key=' + MapsKey;
 
     $scope.markers = [];
     $scope.interests = InterestTypeFactory.factory.query();
     $scope.interest = {};
+    $scope.currentPosition = {};
 
     $scope.$on('$ionicView.enter', function () {
-      //TODO: buscar la posicion
-      if (currentPos) {
-        findPois(null, null);
-        var image = UserFactory.getUser() ? 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small'
-          : 'img/default-profile.jpg';
-        $scope.currentPos.marker = image;
-      }
+      updatePosition();
+      var image = UserFactory.getUser() ? 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small'
+        : 'img/default-profile.jpg';
+      $scope.currentPosition.marker = image;
     });
 
     var getLocation = function (position) {
       return new Promise(function (resolve, reject) {
-        currentPos = position;
-        $scope.currentPos = currentPos;
-        //TODO: centrar mapa
-        var image = UserFactory.getUser() ? 'http://graph.facebook.com/' + UserFactory.getUser().facebookId + '/picture?type=small'
-          : 'img/default-profile.jpg';
-        $scope.currentPos.marker = image;
-        resolve('Location updated');
+        $scope.currentPosition.position = position;
+        resolve(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
       });
     };
 
     var locationFound = function (position) {
-      NgMap.getMap('categories').then(function (map) {
+      NgMap.getMap('map').then(function (map) {
+        $scope.map = map;
         getLocation(position).then(function () {
           findPois(null, null);
         });
@@ -53,7 +44,6 @@
 
     var locationNotFound = function (error) {
       //TODO: cambiar toast
-      // alert('No se pudo obtener la ubicación');
       var alertPopup = $ionicPopup.alert({
         title: 'Error',
         template: 'No se pudo obtener la ubicación'
@@ -64,17 +54,23 @@
       console.log('No se pudo obtener la ubicación: ' + error.message);
     };
 
-    $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
+    // var watch = $cordovaGeolocation.watchPosition(options);
+    // watch.then(null, locationNotFound, locationFound);
+
+    var updatePosition = function () {
+      //TODO: verificar si tiene permiso de gps y habilitado el gps
+      $cordovaGeolocation.getCurrentPosition(options).then(locationFound, locationNotFound);
+    };
+    $interval(updatePosition, 120000);
 
     $scope.centerOnCurrentPosition = function () {
       $ionicLoading.show({
         template: 'Obteniendo ubicación actual...',
         noBackdrop: true
       });
-
-      //Basta con el watch?
       $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
-        getLocation(position).then(function () {
+        getLocation(position).then(function (myLatLng) {
+          $scope.map.setCenter(myLatLng);
           $ionicLoading.hide();
         });
       }, locationNotFound);
@@ -82,10 +78,10 @@
 
     var findPois = function (interest, subInterest) {
       return new Promise(function (resolve, reject) {
-        console.log('findpois user', UserFactory.getUser());
         var user = UserFactory.getUser();
         var userId = user ? user.id : null;
-        PointOfInterestFactory.getPointsOfInterest(userId, currentPos.coords.latitude, currentPos.coords.longitude, interest, subInterest)
+        PointOfInterestFactory.getPointsOfInterest(userId, $scope.currentPosition.position.coords.latitude,
+          $scope.currentPosition.position.coords.longitude, interest, subInterest)
           .then(function (data) {
             if (user) {
               UserFactory.factory.get({id: UserFactory.getUser().id}, function (user) {
@@ -103,13 +99,7 @@
     };
 
     $scope.changeInterest = function (interest) {
-      // $scope.interest = interest;
-      // UserInterestTypeFactory.factory.save({
-      //   userId: UserFactory.getUser().id,
-      //   interestType: $scope.interest
-      // }, function (success) {
       findPois(interest, null);
-      // });
     };
 
     var createMarker = function (place) {

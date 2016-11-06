@@ -43,7 +43,6 @@
               .then(function (profileInfo) {
                 var user = factory.convertUser(profileInfo, success.authResponse.accessToken);
 
-                //TODO: revizar aqui, se crea usuarios a cada rato
                 UserFactory.factory.update({id: user.id}, user, function (response) {
                   UserFactory.setUser(response);
                   $ionicLoading.hide();
