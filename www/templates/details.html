@@ -1,0 +1,20 @@
+<ion-modal-view class="modal-view">
+  <ion-header-bar class="bar-positive">
+    <h1 class="title" style="text-align: center">Detalles</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModal()">Cerrar</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <div style="text-align: center">
+      <h1>{{selectedPoi.name}}</h1>
+      <p style="text-align: justify" ng-bind-html="selectedPoi.content.description"></p>
+
+      <a class="button button-block button-positive icon icon-left ion-social-foursquare-outline button-size"
+         ng-click="openBrowser(selectedPoi.placeId)">Ver en Foursquare</a>
+      <br>
+      <a class="button button-block button-positive icon icon-left ion-navigate button-size"
+         ng-click="launchNavigator()">Obtener Direcciones</a>
+    </div>
+  </ion-content>
+</ion-modal-view>

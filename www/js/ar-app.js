@@ -23,7 +23,7 @@
 					controller: 'infoCtrl'
 				});
 		}])
-		.controller('arCtrl', function ($scope, $ionicPopup, panels) {
+		.controller('arCtrl', function ($scope) {
 
 			$scope.showBar = false;
 
@@ -65,36 +65,6 @@
 				}
 			};
 
-			// $scope.showPopup = function () {
-      // 	$scope.rating = {};
-      // 	var rating = $ionicPopup.show({
-      // 		template: '<rating style="text-align: center" ng-model="rating.value" max="5"></rating>',
-      // 		title: 'Rate the place',
-      // 		// subTitle: 'Please use normal things',
-      // 		scope: $scope,
-      // 		buttons: [
-      // 			{text: 'Cancel'},
-      // 			{
-      // 				text: '<b>Rate</b>',
-      // 				type: 'button-positive',
-      // 				onTap: function (e) {
-      // 					return true;
-      // 				}
-      // 			}
-      // 		]
-      // 	});
-      //
-      // 	rating.then(function (result) {
-      // 		console.log('Tapped', result);
-      // 		var architectURL = 'architectsdk://position=' + $scope.marker.position + '&action=rating&value=' + $scope.rating.value;
-      // 		document.location = architectURL;
-      // 	}, function (error) {
-      // 		console.log('error', error);
-      // 	}, function (popup) {
-      // 		popup.close();
-      // 	});
-      // };
-
 			//TODO: revisar xq esta comentado
 			// AR.context.onLocationChanged = locationChanged;
 		})
@@ -106,11 +76,6 @@
 
 			$scope.openBrowser = function () {
 				var architectURL = 'architectsdk://position=' + $scope.marker.position + '&action=openBrowser';
-				document.location = architectURL;
-			};
-
-			$scope.openMaps = function () {
-				var architectURL = 'architectsdk://position=' + $scope.marker.position + '&action=openMaps';
 				document.location = architectURL;
 			};
 

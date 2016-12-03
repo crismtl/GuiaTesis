@@ -3,7 +3,7 @@
   'use strict';
 
   function MapController($scope, $cordovaGeolocation, $ionicLoading, $ionicPopup, $ionicModal, $cordovaLaunchNavigator,
-                         $interval,
+                         $interval, $cordovaInAppBrowser,
                          NgMap, UserFactory, PointOfInterestFactory, InterestTypeFactory, WikitudeFactory, MapsKey) {
 
     var options = {
@@ -111,7 +111,7 @@
     /**
      * Modal
      */
-    $ionicModal.fromTemplateUrl('templates/interest.html', {
+    $ionicModal.fromTemplateUrl('templates/details.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
@@ -133,6 +133,10 @@
 
     $scope.launchNavigator = function () {
       $cordovaLaunchNavigator.navigate([$scope.selectedPoi.latitude, $scope.selectedPoi.longitude]);
+    };
+
+    $scope.openBrowser = function (placeId) {
+      $cordovaInAppBrowser.open('foursquare.com/v/' + placeId, '_system', 'location=yes');
     };
   }
 

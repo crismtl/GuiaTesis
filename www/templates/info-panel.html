@@ -1,18 +1,21 @@
 <div class="pane-head">
-    <div class="bar bar-header bar-positive">
-        <h1 class="title">Detalles</h1>
-        <button class="button icon ion-close" data-ng-click="panels.close();">Cerrar</button>
-    </div>
+  <div class="bar bar-header bar-positive">
+    <h1 class="title">Detalles</h1>
+    <button class="button icon ion-close" data-ng-click="panels.close();">Cerrar</button>
+  </div>
 </div>
 <div class="pane-body content has-header padding" style="text-align: center">
-    <div class="row">
-        <h3>{{marker.name}}</h3>
-    </div>
+  <div class="row">
+    <h3>{{marker.name}}</h3>
+  </div>
 
-    <div class="row">
-        <p style="text-align: justify" ng-bind-html="marker.content.description"></p>
-    </div>
+  <div class="row">
+    <p style="text-align: justify" ng-bind-html="marker.content.description"></p>
+  </div>
 
-    <a class="button button-block button-positive icon icon-left ion-navigate button-size"
-       ng-click="launchNavigator()">Obtener Direcciones</a>
+  <a class="button button-block button-positive icon icon-left ion-social-foursquare-outline button-size"
+     ng-click="openBrowser()">Ver en Foursquare</a>
+
+  <a class="button button-block button-positive icon icon-left ion-navigate button-size"
+     ng-click="launchNavigator()">Obtener Direcciones</a>
 </div>

@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function WikitudeFactory(UserFactory) {
+  function WikitudeFactory() {
     var wikitudePlugin = {
 
       plugin: {},
@@ -52,40 +52,17 @@
       },
 
       onURLInvoked: function (url) {
-        // console.log(url);
         var position = parseInt(url.substring(24, 25));
         var action = url.substring(33);
         // console.log(action.substring(0, 6));
-        // if ('openBrowser' == action) {
-        //   wikitudePlugin.getPlugin().close();
-        //   cordova.InAppBrowser.open(wikitudePlugin.pois[position].attributes.website, '_system', 'location=yes');
-        // } else if ('openMaps' == action) {
-        //   wikitudePlugin.getPlugin().close();
-        //   cordova.InAppBrowser.open(wikitudePlugin.pois[position].attributes.url, '_system', 'location=yes');
-        // } else
-        if ('launchNavigator' == action) {
+        if ('openBrowser' == action) {
+          wikitudePlugin.getPlugin().close();
+          cordova.InAppBrowser.open('foursquare.com/v/' + wikitudePlugin.pois[position].placeId, '_system', 'location=yes');
+        } else if ('launchNavigator' == action) {
           wikitudePlugin.getPlugin().close();
           launchnavigator.navigate([wikitudePlugin.pois[position].latitude, wikitudePlugin.pois[position].longitude]);
-          // } else if ('closeWikitudePlugin' == action) {
-          //   wikitudePlugin.getPlugin().close();
-          // } else if ('visited' == action) {
-          //   console.log(wikitudePlugin.pois[position]);
-          //   VisitedPlaceFactory.factory.save({
-          //     userId: UserFactory.getUser().id,
-          //     placeId: wikitudePlugin.pois[position].placeId,
-          //     rating: null
-          //   });
-          // } else if ('rating' == action.substring(0, 6)) {
-          //   var rating = action.substring(13);
-          //   if (!isNaN(rating)) {
-          //     VisitedPlaceFactory.factory.save({
-          //       userId: UserFactory.getUser().id,
-          //       placeId: wikitudePlugin.pois[position].placeId,
-          //       rating: rating
-          //     });
-          //   }
-          // } else {
-          //   alert('ARchitect => PhoneGap ' + url);
+        } else if ('closeWikitudePlugin' == action) {
+          wikitudePlugin.getPlugin().close();
         }
       }
     };
