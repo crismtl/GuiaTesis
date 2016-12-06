@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function AccountController($scope, UserFactory, InterestTypeFactory, UserInterestTypeFactory) {
+  function AccountController($scope, $ionicHistory, UserFactory, InterestTypeFactory, UserInterestTypeFactory, FacebookFactory) {
     $scope.user = UserFactory.getUser();
     $scope.user.img = 'http://graph.facebook.com/' + $scope.user.facebookId + '/picture?type=large';
     $scope.birthday = formatDate($scope.user.birthday);
@@ -22,6 +22,15 @@
         $scope.myInterest = getMyInterest(success).interestType;
       });
     };
+
+    $scope.logout = function () {
+      facebookConnectPlugin.logout();
+      UserFactory.setUser(null);
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+      FacebookFactory.checkStatus('tab.account', 'tab.loginInAccount');
+    }
   }
 
   function getMyInterest(interestsArray) {
