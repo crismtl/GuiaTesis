@@ -26,6 +26,10 @@
 
 <div class="radarContainer_left" id="radarContainer"></div>
 
+<div class="closeButton_right" id="closeButton">
+  <button class="button button-icon icon ion-ios-close-outline" ng-click="closeWikitudePlugin()"></button>
+</div>
+
 <div class="bar bar-footer bar-positive" ng-show="showBar">
   <h1 class="title">Distance: {{marker.distanceToUserValue}}</h1>
   <button class="button icon ion-navicon pull-right" ng-click="openPanel()"></button>

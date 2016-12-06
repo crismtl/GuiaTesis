@@ -49,6 +49,11 @@
 				$scope.$apply();
 			};
 
+      $scope.closeWikitudePlugin = function () {
+        var architectURL = 'architectsdk://position=' + 0 + '&action=closeWikitudePlugin';
+        document.location = architectURL;
+      };
+
 			var locationChanged = function (lat, lon, alt, acc) {
 				for (var i = 0; i < World.markerList.length; i++) {
 					var marker = World.markerList[i];
@@ -81,11 +86,6 @@
 
 			$scope.launchNavigator = function () {
 				var architectURL = 'architectsdk://position=' + $scope.marker.position + '&action=launchNavigator';
-				document.location = architectURL;
-			};
-
-			$scope.closeWikitudePlugin = function () {
-				var architectURL = 'architectsdk://position=' + $scope.marker.position + '&action=closeWikitudePlugin';
 				document.location = architectURL;
 			};
 		});

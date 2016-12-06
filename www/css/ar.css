@@ -6,6 +6,14 @@
   height: 150px;
 }
 
+.closeButton_right {
+  position: absolute;
+  top: 5px;
+  right: 30px;
+  width: 15px;
+  height: 15px;
+}
+
 ul.rating li {
   display: inline;
   border: 0px;
